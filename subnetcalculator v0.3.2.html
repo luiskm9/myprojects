@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NETENG IP Addressing Tool v0.3.2</title>
+    <style>
+    body, html{
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+		height: 94%;
+    }
+	h3 {
+		display: block;
+		font-size: 1.17em;
+		margin-block-start: 1em;
+		margin-block-end: 1em;
+		margin-inline-start: 0px;
+		margin-inline-end: 0px;
+		font-weight: bold;
+	}
+	.page-grid {
+	  display: grid;
+	  grid-template-rows: 1fr auto;
+	  height: 100%;
+	}
+	.content-wrapper {
+	  overflow: auto;
+	}
+    .banner {
+        background-color: #4a90e2;
+        padding: 20px;
+        color: white;
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    .menu-bar {
+        background-color: #4a90e2;
+        padding: 10px 0;
+    }
+
+    .menu-bar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    .menu-bar li {
+        margin: 0 10px;
+    }
+
+    .menu-bar a {
+        color: white;
+        text-decoration: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+    }
+
+    .menu-bar a:hover {
+        background-color: #3c7cc2;
+    }
+	.menu-item.active {
+		background-color: #3c7cc2;
+		color: white;
+	}
+    .subnet-calculator {
+        display: flex;
+		align-items:center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px;
+    }
+
+	.resultWrapperDivs {
+		display:flex;
+		flex-wrap:row;
+		padding:10px
+	}
+
+    .subnet-calculator label {
+		margin-right:0px;
+	
+	}
+    .subnet-calculator input,
+    .subnet-calculator select,
+    .subnet-calculator button {
+        font-size: 16px;
+    }
+
+    .subnet-calculator input,
+    .subnet-calculator select {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+        color: #333;
+    }
+
+    .subnet-calculator button {
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .subnet-calculator button:hover {
+        background-color: #3c7cc2;
+    }
+
+	.content-div button{
+	 background-color: #4a90e2;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+	}
+	.content-div button:hover {
+        background-color: #3c7cc2;
+    }
+    #main-div {
+        margin: 20px;
+		display:flex;
+		flex-wrap:nowrap;
+    }
+	#subnet-div {
+		display: flex; 
+		flex-direction: column;
+		width: 680px;
+	}
+	#vlsb-div {
+		display:flex;
+		flex-direction: row;
+	}
+	#vlsb-input-wrapper{
+		display:flex;
+		flex-direction: column;
+		width: 321px;
+		height:auto;
+	}
+	#vlsb-output-wrapper{
+		display:flex;
+		flex-direction: column;
+		width: auto;
+		height:auto;
+		border: 1px solid #ddd;
+        border-radius: 4px;
+		background-color: #fff;
+		margin-left:8px
+	}
+	.subnetInfoWrapper {
+	    border: 1px solid #ddd;
+        border-radius: 4px;
+		display: flex;
+		flex-direction: column;
+		width:680px;
+	}
+	.inputsubnetWrapper{
+		background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+		display: flex; 
+		flex-direction: column;
+		margin-left:10px;
+		padding:10px;
+		gap:10px;
+		width: auto;
+		height:auto;
+	}
+    .subnetInfo {
+        background-color: #fff;
+		white-space: pre-wrap;
+        display: flex;
+        flex-wrap: wrap;
+		align-items: flex-start;
+		width:680px;
+
+    }
+	.result-div {
+		background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+		display: flex; 
+		flex-direction: column;
+		margin-left:10px;
+		padding:10px;
+		gap:10px;
+		width: 300px;
+		height:900px;
+	
+	}
+    .titleDivs {
+		width:100px;
+		margin-left:15px;
+    }
+
+	.infoDivs {
+		width:280px;
+		margin-left:15px;
+    }
+
+    .split-button {
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+		margin-top: 50px;
+		height: 40px;
+		width: 70px;
+		margin-right:10px;
+    }
+	.nextButton{
+	    background-color: #4a90e2;
+        color: white;
+        border: none;
+        margin-left:10px;
+        border-radius: 4px;
+        cursor: pointer;
+		margin-top: 50px;
+		height: 40px;
+		width: 15px;
+		text-align:center;
+		font-weight:bold;
+	}
+	.addsubnet-input-label {
+		padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+        color: #333;
+		font-size: 16px;
+	}
+	.addsubnet-input-amount {
+		padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+        color: #333;
+		width:60px;
+		margin-left:10px;
+		font-size: 16px;
+	}
+	.cidrSmall {
+		padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+        color: #333;
+		height:40px;
+		margin-top: 50px;
+		width:148px;
+	}
+
+	.nextButton:hover{
+		background-color: #3c7cc2;
+	}
+
+    .split-button:hover {
+        background-color: #3c7cc2;
+    }
+	.content-div {
+		padding: 20px;
+	}
+
+	#supernetForm {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
+
+	#routingTable {
+		margin-bottom: 5px;
+		width:700px;
+	}
+
+	#superButton {
+		align-self: flex-start;
+		margin-left:25px
+	}
+	#results {
+		margin-left:30px
+	}
+	footer {
+	  background-color: #4a90e2;
+	  padding: 10px;
+	  color: white;
+	  font-size: 14px;
+	  text-align: left;
+	  margin-top: 20px;
+	  border-top: 1px solid #3c7cc2;
+	}
+
+	footer p {
+	  margin: 5px 0;
+	}
+</style>
+</head>
+<body>
+     <div class="page-grid">
+	<div class="content-wrapper">
+	<div class="banner">
+        2ID C6 NETENG IP Addressing Tool v0.3.2
+    </div>
+    <div class="menu-bar">
+        <ul>
+			<li><a href="#" class="menu-item active" id="subnetCalculator">Subnet Calculator</a></li>
+			<li><a href="#" class="menu-item" id="supernetCalculator">Summary Calculator</a></li>
+			<li><a href="#" class="menu-item" id="tunnelBuilder">Tunnel Builder</a></li>
+			<li><a href="#" class="menu-item" id="about">About</a></li>
+        </ul>
+    </div>
+    <div id="subnetCalculatorDiv" class="content-div" style="display:block;">
+		<div class="subnet-calculator">
+			<label for="ipAddress">IP Address:</label>
+			<input type="text" id="ipAddress" placeholder="192.168.0.24" onkeypress="_verifyEnter(event)">
+			<label for="cidrSelect">Subnet Mask:</label>
+			<select id="cidrSelect" onchange="_verifySelect(document.getElementById('ipAddress').value, this.value)">
+				<option value="32">&ensp;/32&emsp;&emsp;255.255.255.255</option>
+				<option value="31">&ensp;/31&emsp;&emsp;255.255.255.254</option>
+				<option value="30">&ensp;/30&emsp;&emsp;255.255.255.252</option>
+				<option value="29">&ensp;/29&emsp;&emsp;255.255.255.248</option>
+				<option value="28">&ensp;/28&emsp;&emsp;255.255.255.240</option>
+				<option value="27">&ensp;/27&emsp;&emsp;255.255.255.224</option>
+				<option value="26">&ensp;/26&emsp;&emsp;255.255.255.192</option>
+				<option value="25">&ensp;/25&emsp;&emsp;255.255.255.128</option>
+				<option value="24" selected>&ensp;/24&emsp;&emsp;255.255.255.0</option>
+				<option value="23">&ensp;/23&emsp;&emsp;255.255.254.0</option>
+				<option value="22">&ensp;/22&emsp;&emsp;255.255.252.0</option>
+				<option value="21">&ensp;/21&emsp;&emsp;255.255.248.0</option>
+				<option value="20">&ensp;/20&emsp;&emsp;255.255.240.0</option>
+				<option value="19">&ensp;/19&emsp;&emsp;255.255.224.0</option>
+				<option value="18">&ensp;/18&emsp;&emsp;255.255.192.0</option>
+				<option value="17">&ensp;/17&emsp;&emsp;255.255.128.0</option>
+				<option value="16">&ensp;/16&emsp;&emsp;255.255.0.0</option>
+				<option value="15">&ensp;/15&emsp;&emsp;255.254.0.0</option>
+				<option value="14">&ensp;/14&emsp;&emsp;255.252.0.0</option>
+				<option value="13">&ensp;/13&emsp;&emsp;255.248.0.0</option>
+				<option value="12">&ensp;/12&emsp;&emsp;255.240.0.0</option>
+				<option value="11">&ensp;/11&emsp;&emsp;255.224.0.0</option>
+				<option value="10">&ensp;/10&emsp;&emsp;255.192.0.0</option>
+				<option value="9">&ensp;/9&ensp;&emsp;&emsp;255.128.0.0</option>
+				<option value="8">&ensp;/8&ensp;&emsp;&emsp;255.0.0.0</option>
+			</select>
+			<button id="getInfo" onclick="_click(document.getElementById('ipAddress').value, document.getElementById('cidrSelect').value)">Get Info</button>
+		</div>
+		<div id="main-div">
+			<div id="subnet-div" style="display:none;">
+				<div id="subnetInfoWrapper" class="subnetInfoWrapper">
+					<!-- Subnet information will be displayed here -->
+				</div>
+			</div>
+			<div id="vlsb-div">
+				<div id="vlsb-input-wrapper">
+			
+				</div>
+				<div id="vlsb-output-wrapper" style="display:none;">
+			
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="supernetCalculatorDiv" class="content-div" style="display:none;">
+		<form id="supernetForm" onsubmit="event.preventDefault(); processRoutingTable();">
+		  <textarea id="routingTable" rows="20" cols="100" placeholder="Paste the routing table here"></textarea><br>
+		  <button id="superButton" type="submit">Calculate Summarizations</button>
+		</form>
+		<div id="results"></div>
+	</div>
+	<div id="tunnelBuilderDiv" class="content-div" style="display:none;">
+		<!--Tunnel Builder content here -->
+		<h2>Tunnel Builder</h2>
+	</div>
+	<div id="aboutDiv" class="content-div" style="display:none;">
+		<h2>About</h2>
+		<p>Welcome to the "About" section of our beloved NETENG IP Addressing Tool, where sleep is a myth, and dedication is measured in cups of coffee consumed. Our tireless Network Engineer, fueled by passion (and possibly caffeine-induced delirium), spent nearly two sleepless nights crafting this digital masterpiece. The dedication to the task was so profound that even cutting grass became an analogy for unwavering commitment. Why, you ask? Because just like meticulously maintaining a perfect lawn, this tool was designed to offer a pristine and polished solution for all your IP addressing needs. So, go on and explore this marvel of engineering, which was created amidst sleep deprivation and obsessive lawn care references. Rest assured, he has now caught up on sleep, but the relentless dedication to improving this tool and trimming the grass remains evergreen.</p>
+	</div>
+    <script>
+	document.getElementById("subnetCalculator").addEventListener("click", function() {
+		showContentDiv("subnetCalculatorDiv");
+	});
+
+	document.getElementById("supernetCalculator").addEventListener("click", function() {
+		showContentDiv("supernetCalculatorDiv");
+	});
+
+	document.getElementById("tunnelBuilder").addEventListener("click", function() {
+		showContentDiv("tunnelBuilderDiv");
+	});
+
+	document.getElementById("about").addEventListener("click", function() {
+		showContentDiv("aboutDiv");
+	});
+	
+	function showContentDiv(id) {
+		const contentDivs = document.getElementsByClassName("content-div");
+		
+		for (let div of contentDivs) {
+			div.style.display = "none";
+		}
+		document.getElementById(id).style.display = "block";
+		
+		const menuItems = document.getElementsByClassName('menu-item');
+		for (let item of menuItems) {
+			item.classList.remove('active');
+		}
+		document.getElementById(id.replace('Div', '')).classList.add('active');
+	}
+
+	function _openNext(){
+		
+		if(clickedOnNext == true){
+			var vlsbDiv = document.getElementById('vlsb-input-wrapper');
+			while (vlsbDiv.hasChildNodes()) vlsbDiv.removeChild(vlsbDiv.firstChild);
+			vlsbDiv = document.getElementById('vlsb-output-wrapper');
+			while (vlsbDiv.hasChildNodes()) vlsbDiv.removeChild(vlsbDiv.firstChild);
+			
+			vlsbDiv.style.display = "none";
+			clickedOnNext = false;
+			this.setAttribute('isClicked', '0');
+			currentForwardBtn = null;
+		}
+		else{
+			clickedOnNext = true;
+			this.setAttribute('isClicked', '1');
+			currentForwardBtn = this;
+			
+			var vlsbDiv2 = document.getElementById('vlsb-input-wrapper');
+			while (vlsbDiv2.hasChildNodes()) vlsbDiv2.removeChild(vlsbDiv2.firstChild);
+			
+			vlsbDiv2 = document.getElementById('vlsb-output-wrapper');
+			while (vlsbDiv2.hasChildNodes()) vlsbDiv2.removeChild(vlsbDiv2.firstChild);
+			
+			var clearDIV = document.getElementById('vlsb-output-wrapper');
+			while(clearDIV.hasChildNodes()) clearDIV.removeChild(clearDIV.firstChild);
+			clearDIV.style.display = "none";
+			
+			const vlsbDiv = document.createElement('div');
+			vlsbDiv.classList.add('inputsubnetWrapper');
+			vlsbDiv.setAttribute('id', 'inputsubnetWrapper');
+			vlsbDiv.appendChild(createInputSet());
+			
+			const addButton = document.createElement('button');
+			addButton.textContent = '+ Add Subnet';
+			addButton.addEventListener('click', addButtonClick);
+			vlsbDiv.appendChild(addButton);
+			
+			const calculateButton = document.createElement('button');
+			calculateButton.textContent = 'Find Me Space';
+			calculateButton.setAttribute('idTracker', this.getAttribute('idTracker'));
+			calculateButton.addEventListener('click', calculateButtonClick);
+			vlsbDiv.appendChild(calculateButton);
+			
+			document.getElementById('vlsb-input-wrapper').appendChild(vlsbDiv);
+		}
+	}
+
+	function createInputSet() {
+		const div = document.createElement('div');
+
+		const labelInput = document.createElement('input');
+		labelInput.setAttribute('placeholder', 'Label');
+		labelInput.classList.add('addsubnet-input-label');
+		div.appendChild(labelInput);
+
+		const amountInput = document.createElement('input');
+		amountInput.setAttribute('placeholder', 'Amount');
+		amountInput.classList.add('addsubnet-input-amount');
+		div.appendChild(amountInput);
+
+		return div;
+	}
+
+	function addButtonClick() {
+		const mainDiv = document.getElementById('inputsubnetWrapper');
+		mainDiv.insertBefore(createInputSet(), this);
+	}
+
+	function calculateButtonClick() {
+	        
+		var clearDIV = document.getElementById('vlsb-output-wrapper');
+		while(clearDIV.hasChildNodes()) clearDIV.removeChild(clearDIV.firstChild);
+		clearDIV.style.display = "block";
+			
+			
+		const inputDiv = document.getElementById('inputsubnetWrapper');
+		const childDivs = inputDiv.children;
+		
+		let inputData = [];
+
+		for (let i = 0; i < childDivs.length; i++) {
+		  const inputs = childDivs[i].getElementsByTagName('input');
+		  let label = '';
+		  let amount = '';
+
+		  for (let j = 0; j < inputs.length; j++) {
+			if (inputs[j].getAttribute('placeholder') === 'Label') {
+			  label = inputs[j].value;
+			} else if (inputs[j].getAttribute('placeholder') === 'Amount') {
+			  amount = inputs[j].value;
+			}
+		  }
+		  inputData.push({ label: label, amount: amount });
+		}
+		
+		const resultDiv = document.createElement('div');
+		resultDiv.classList.add('result-div');
+		resultDiv.setAttribute('id', 'result-div');
+		
+		var fixip = subnetArray[this.getAttribute('idTracker')].subnet
+		fixip = fixip.join('.');
+		var inputSubnet = fixip+'/'+subnetArray[this.getAttribute('idTracker')].size;
+		
+		const output = calculateRequirement2(inputSubnet, inputData);
+		//const output = calculateRequirement2("192.168.1.0/24", [{ label: "2CAB", amount: 32 }, { label: "DSB", amount: 25 }]);
+		
+		for(var i = 0; i < output.length; i++){
+
+		
+			// Calculate subnet properties
+			const subnetInfo = getSubnetInfo2(output[i].subnet.split('/')[0], output[i].subnet.split('/')[1]);
+
+			let outputTitles = "<strong>" + output[i].label + "</strong>:<br>"+"Network:<br>"+
+							"Subnet Mask:<br>"+
+							"Wildcard:<br>"+
+							"Total Usable:<br>"+
+							"IP Range:<br>"+
+							"Broadcast:<br> ";
+
+			let outputInfo = "<br>" + (subnetInfo.subnet) + "/" + (subnetInfo.cidr) + " <br> " +
+					"" + (subnetInfo.mask) + "<br>" +
+					"" + subnetInfo.wildcard + "<br>" +
+					"" + subnetInfo.available + "<br>" +
+					"" + subnetInfo.firstAvailable + " - " + subnetInfo.lastAvailable + "<br>" +
+					"" + subnetInfo.broadCast + "<br> ";
+
+			const titlesDiv = document.createElement('div');
+			titlesDiv.classList.add('titleDivs');
+			titlesDiv.innerHTML = outputTitles;
+
+			const infoDiv = document.createElement('div');
+			infoDiv.classList.add('infoDivs');
+			infoDiv.innerHTML = outputInfo;
+
+			const wrapperDiv = document.createElement('div');
+			wrapperDiv.classList.add('resultWrapperDivs');
+
+			// Append subnetDiv to resultsDiv
+			wrapperDiv.appendChild(titlesDiv);
+			wrapperDiv.appendChild(infoDiv);
+			document.getElementById('vlsb-output-wrapper').appendChild(wrapperDiv);
+		
+		}
+	}
+	
+	
+	function ipToNumber(ip) {
+	  const [a, b, c, d] = ip.split('.');
+	  return ((a * 256 + b) * 256 + c) * 256 + d;
+	}
+
+	function numberToIp(number) {
+	  const a = (number >>> 24) & 255;
+	  const b = (number >>> 16) & 255;
+	  const c = (number >>> 8) & 255;
+	  const d = number & 255;
+	  return `${a}.${b}.${c}.${d}`;
+	}
+
+	function calculateRequirement2(subnetWithCidr, labelsWithAmount) {
+	  const [subnetIp, subnetMask] = subnetWithCidr.split('/');
+	  const ipToNumber = ip => ip.split('.').reduce((acc, part) => (acc << 8) + parseInt(part), 0);
+	  const numberToIp = num => ((num >>> 24) & 0xFF) + '.' + ((num >>> 16) & 0xFF) + '.' + ((num >>> 8) & 0xFF) + '.' + (num & 0xFF);
+	  const subnetNumber = ipToNumber(subnetIp);
+	  const subnetSize = 1 << (32 - subnetMask);
+
+	  const subnets = [];
+	  const spareSubnets = [];
+		
+	 for(var i = 0; i < labelsWithAmount.length; i++){
+		if(labelsWithAmount[i].label == '/30' || labelsWithAmount[i].label == 'P2P' || labelsWithAmount[i].label == 'p2p'){
+			for (var a = 1; a <= parseInt(labelsWithAmount[i].amount); a++){
+				labelsWithAmount.push({label:'P2P ', amount:2});
+			}
+			labelsWithAmount.splice(i, 1);
+			i--;
+		}
+	 }
+	
+	  labelsWithAmount.sort((a, b) => a.amount - b.amount);
+
+	  for (let { label, amount } of labelsWithAmount) {
+		if (amount <= 0) continue;
+		amount = parseInt(amount);
+		const requiredIps = amount + 2;
+		const requiredSize = 1 << (32 - (32 - Math.ceil(Math.log2(requiredIps))));
+
+		let currentSubnet = subnetWithCidr;
+		let foundSpare = false;
+
+		// Check if there is a spare subnet that fits
+		for (let i = spareSubnets.length - 1; i >= 0; i--) {
+		  const [spareIp, spareCidr] = spareSubnets[i].split('/');
+		  const spareSize = 1 << (32 - spareCidr);
+
+		  if (spareSize === requiredSize) {
+			subnets.push({ label, subnet: spareSubnets[i] });
+			spareSubnets.splice(i, 1);
+			foundSpare = true;
+			break;
+		  } else if (spareSize > requiredSize) {
+			currentSubnet = spareSubnets[i];
+			spareSubnets.splice(i, 1);
+			break;
+		  }
+		}
+
+		if (!foundSpare) {
+		  while (true) {
+			const [currentIp, currentCidr] = currentSubnet.split('/');
+			const currentSize = 1 << (32 - currentCidr);
+
+			if (currentSize === requiredSize) {
+			  subnets.push({ label, subnet: currentSubnet });
+			  break;
+			}
+
+			if (currentSize < requiredSize) {
+			  return false;
+			}
+
+			const newSize = currentSize / 2;
+			const newCidr = parseInt(currentCidr) + 1;
+			const newSubnetStart = ipToNumber(currentIp) + newSize;
+			const newSubnetIp = numberToIp(newSubnetStart);
+
+			const lowerSubnet = `${currentIp}/${newCidr}`;
+			const higherSubnet = `${newSubnetIp}/${newCidr}`;
+
+			spareSubnets.push(lowerSubnet);
+			currentSubnet = higherSubnet;
+		  }
+		}
+	  }
+
+	  // Sort spare subnets from biggest to smallest
+	  spareSubnets.sort((a, b) => parseInt(b.split('/')[1]) - parseInt(a.split('/')[1]));
+
+	  for(var i = 0; i < spareSubnets.length; i++)
+		subnets.push({label:'Spare',subnet:spareSubnets[i]});
+
+	  subnets.sort((a, b) => {
+		  const [aIp, aCidr] = a.subnet.split('/');
+		  const [bIp, bCidr] = b.subnet.split('/');
+		  const aCidrNum = parseInt(aCidr);
+		  const bCidrNum = parseInt(bCidr);
+
+		  if (aCidrNum === bCidrNum) {
+			const ipToNumber = ip => ip.split('.').reduce((acc, part) => (acc << 8) + parseInt(part), 0);
+			return ipToNumber(aIp) - ipToNumber(bIp);
+		  }
+
+		  return aCidrNum - bCidrNum;
+		});
+		return subnets;
+	}
+
+	function _split2(subnet, cidr) {
+		subnet = subnet.split('.');
+		
+		var splitIPs = []
+		
+		const bitTable = [];
+		for (let i = 0; i + 8 <= 32; i++) bitTable[8 + i] = 24 - i;
+		
+		if (cidr >= 8 && cidr <= 15){
+			octate = 1;
+			offset = 16;
+		} else if (cidr >= 16 && cidr <= 23) {
+			octate = 2;
+			offset = 8;
+		} else if (cidr >= 24 && cidr <= 32) {
+			octate = 3;
+			offset = 0;
+		}
+		offset = Math.pow(2, bitTable[cidr + offset]) - 2;
+		cidr++
+		
+		splitIPs.push(getSubnetInfo2(subnet, cidr));
+		
+		splitNext = (offset+2)/2;
+		subnet[octate] = parseInt(subnet[octate]) + parseInt(splitNext);
+		splitIPs.push(getSubnetInfo2(subnet, cidr));
+		
+		return splitIPs;
+	}
+
+	function getSubnetInfo2(ip, slash) {	
+		ip = ""+ip
+		ip = ip.split('.')
+		slash  = parseInt(slash);
+		const bitTable = [];
+		for (let i = 0; i + 8 <= 32; i++) bitTable[8 + i] = 24 - i;
+
+		var network = [ip[0], ip[1], 0, 0];
+		var firstAvailable = [ip[0], ip[1], 0, 1];
+		var lastAvailable = [ip[0], ip[1], 255, 254];
+		var broadCast = [ip[0], ip[1], 255, 255];
+		var mask = [255, 255, 0, 0];
+		var wildcard = [0, 0, 255, 255];
+		var available = Math.pow(2, bitTable[slash]) - 2;
+		let offset = 0;
+		let octate = -1;
+
+		if (slash >=16){
+			network = [ip[0], ip[1], ip[2], 0];
+			firstAvailable = [ip[0], ip[1], ip[2], 1];
+			lastAvailable = [ip[0], ip[1], ip[2], 254];
+			broadCast = [ip[0], ip[1], ip[2], 255];
+			mask = [255, 255, 255, 0];
+			wildcard = [0, 0, 0, 255];
+		}
+
+		if (slash >= 8 && slash <= 15) {
+			octate = 1;
+			offset = 16;
+		} else if (slash >= 16 && slash <= 23) {
+			octate = 2;
+			offset = 8;
+		} else if (slash >= 24 && slash <= 32) {
+			octate = 3;
+			offset = 0;
+		}
+		
+		offset = Math.pow(2, bitTable[slash + offset]) - 2;
+		mask[octate] = 254 - offset;
+		wildcard[octate] = 255 - mask[octate];
+		mask = mask.join('.');
+		wildcard = wildcard.join('.');
+
+		for (let i = 0; i <= 256; i += (offset + 2)) {
+			if (i > parseInt(ip[octate])) {
+				const x = i - (offset + 2);
+
+				network[octate] = x;
+				broadCast[octate] = offset + x + 1;
+
+				if (slash === 32) {
+					firstAvailable[octate] = ip[3];
+					lastAvailable[octate] = ip[3];
+					available = 0;
+				} else if (slash === 31) {
+					firstAvailable[octate] = x;
+					lastAvailable[octate] = x + 1;
+				} else if (slash > 23) {
+					firstAvailable[octate] = x + 1;
+					lastAvailable[octate] = broadCast[octate] - 1;
+				} else {
+					firstAvailable[octate] = x;
+					lastAvailable[octate] = broadCast[octate];
+				}
+
+				network = network.join('.');
+				firstAvailable = firstAvailable.join('.');
+				lastAvailable = lastAvailable.join('.');
+				broadCast = broadCast.join('.');
+				break;
+			}
+		}
+
+		return({
+			subnet:network,
+			cidr:slash,
+			mask:mask,
+			wildcard:wildcard,
+			available:available,
+			firstAvailable:firstAvailable,
+			lastAvailable:lastAvailable,
+			broadCast:broadCast
+		});
+	}
+
+	function processRoutingTable() {
+	  const routingTable = document.getElementById("routingTable").value;
+	  const lines = routingTable.split("\n");
+	  var ipList = [];
+
+	  lines.forEach(line => {
+		const words = line.split(" ");
+		let isVia = false;
+
+		for (let i = 0; i < words.length; i++) {
+		  const word = words[i];
+		  if (isVia) {
+			isVia = false;
+		  } else if (word === "via") {
+			isVia = true;
+		  } else if (word.match(/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$/)) {
+			const [ip, mask] = word.split("/");
+			ipList.push({
+			  ip: ip,
+			  mask: parseInt(mask, 10)
+			});
+		  }
+		}
+	  });
+
+	  const summarizedRoutes = calculateSummarizations(ipList);
+	  displayResults(summarizedRoutes);
+	}
+
+	function combineTwoSubnets(subnet1, subnet2) {
+	  function ipToInt(ip) {
+		return ip.split('.').reduce((acc, octet) => (acc << 8) + parseInt(octet, 10), 0) >>> 0;
+	  }
+
+	  function intToIp(int) {
+		return ((int >>> 24) + '.' + (int >> 16 & 255) + '.' + (int >> 8 & 255) + '.' + (int & 255));
+	  }
+
+	  const ip1 = subnet1.split('/')[0];
+	  const mask1 = parseInt(subnet1.split('/')[1], 10);
+
+	  const ip2 = subnet2.split('/')[0];
+	  const mask2 = parseInt(subnet2.split('/')[1], 10);
+
+	  const intIp1 = ipToInt(ip1);
+	  const intIp2 = ipToInt(ip2);
+
+	  const subnetMask1 = (0xFFFFFFFF << (32 - mask1)) >>> 0;
+	  const subnetMask2 = (0xFFFFFFFF << (32 - mask2)) >>> 0;
+
+	  const isChild1 = (intIp1 & subnetMask1) === (intIp2 & subnetMask1);
+	  const isChild2 = (intIp2 & subnetMask2) === (intIp1 & subnetMask2);
+
+	  if (isChild1) {
+		return ({ ip: intToIp(intIp1), mask: mask1 });
+	  }
+
+	  if (isChild2) {
+		return ({ ip: intToIp(intIp2), mask: mask2 });
+	  }
+
+	  if (mask1 < mask2) {
+		return false;
+	  }
+
+	  const parentMask = mask1 - 1;
+	  const subnetMask = (0xFFFFFFFF << (32 - parentMask)) >>> 0;
+
+	  const parentNet1 = intIp1 & subnetMask;
+	  const parentNet2 = intIp2 & subnetMask;
+
+	  if (parentNet1 !== parentNet2) {
+		return false;
+	  }
+
+	  const diff = Math.abs(intIp1 - intIp2);
+	  if (diff !== (1 << (32 - mask1))) {
+		return false;
+	  }
+
+	  const combinedIntIp = Math.min(intIp1, intIp2);
+	  const combinedIp = intToIp(combinedIntIp);
+
+	  return ({ ip: combinedIp, mask: mask1 - 1 });
+	}
+
+
+	function calculateSummarizations(ipList) {
+	  var keepGoing = true;
+	 
+	   function ipToInt(ip) {
+			return ip.split('.').reduce((acc, octet) => (acc << 8) + parseInt(octet, 10), 0) >>> 0;
+		}
+	 
+	 while(keepGoing){
+
+
+		  ipList.sort((a, b) => ipToInt(a.ip) - ipToInt(b.ip));
+
+		  const summarizedRoutes = [];
+		  let i = 0;
+
+		  while (i < ipList.length) {
+			if(i+1 < ipList.length){
+				var newforSumm = combineTwoSubnets(ipList[i].ip+'/'+ipList[i].mask, ipList[i+1].ip+'/'+ipList[i+1].mask);
+				if(newforSumm != false){
+					summarizedRoutes.push({
+					  ip: newforSumm.ip,
+					  mask: newforSumm.mask
+					});
+					i++;
+				}
+				else{
+						summarizedRoutes.push({
+						  ip: ipList[i].ip,
+						  mask: ipList[i].mask
+						});
+				}
+			}
+			else{
+				summarizedRoutes.push({
+				  ip: ipList[i].ip,
+				  mask: ipList[i].mask
+				});
+			}
+			i++;
+		  }
+		  if (summarizedRoutes.length == ipList.length){
+		
+			keepGoing = false;
+		  }
+		  else{
+		  
+			ipList = summarizedRoutes;
+		  }
+			
+	  }
+	  return ipList;
+	}
+
+
+	function displayResults(summarizedRoutes) {
+	  const resultsDiv = document.getElementById("results");
+	  // Clear previous results
+	  resultsDiv.innerHTML = "";
+	  
+	  if(summarizedRoutes.length > 0){
+		  // Create label
+		  const label = document.createElement("h3");
+		  label.textContent = "Summarized Routes:";
+		  resultsDiv.appendChild(label);
+
+		  // Display new results
+		  summarizedRoutes.forEach(route => {
+			const routeDiv = document.createElement("div");
+			routeDiv.textContent = `${route.ip}/${route.mask}`;
+			resultsDiv.appendChild(routeDiv);
+		  });
+	  }
+	}
+
+	let idTracker = 0;	
+	let clickedOnNext = false;
+	var mainDiv;
+	var childDiv = [];
+	var subnetArray = [];
+	var currentForwardBtn; 
+	
+	function _verifyEnter(event) {
+		if (event.keyCode === 13) {
+			_click(document.getElementById('ipAddress').value, document.getElementById('cidrSelect').value);
+		}
+	}
+
+	function _verifySelect(ip, mask) {
+		if (verifyInput(ip + '/' + mask)) {
+			_click(ip, mask);
+		}
+	}
+
+	function verifyInput(userInput) {
+		const array = userInput.split('/');
+		if (array.length !== 2) return false;
+
+		const size = parseInt(array[1]);
+		const ipParts = array[0].split('.');
+		if (ipParts.length !== 4 || size < 8 || size > 32) return false;
+
+		return ipParts.every(part => {
+			const num = parseInt(part);
+			return !isNaN(num) && num >= 0 && num <= 255;
+		});
+	}
+
+	function _click(ip, mask) {
+		const value = ip + '/' + mask;
+		if (verifyInput(value)) {
+			mainDiv = document.getElementById('subnetInfoWrapper');
+			while (mainDiv.hasChildNodes()) mainDiv.removeChild(mainDiv.firstChild);
+			var vlsbDiv = document.getElementById('vlsb-input-wrapper');
+			while (vlsbDiv.hasChildNodes()) vlsbDiv.removeChild(vlsbDiv.firstChild);
+			vlsbDiv = document.getElementById('vlsb-output-wrapper');
+			while (vlsbDiv.hasChildNodes()) vlsbDiv.removeChild(vlsbDiv.firstChild);
+			vlsbDiv.style.display = "none";
+			idTracker = 0;
+			clickedOnNext = false;
+			const subnet = ip.split('.');
+			getSubnetInfo(subnet, parseInt(mask), mainDiv);
+		} else {
+			alert('Please enter a valid IP. i.e. 192.168.1.13');
+		}
+	}
+
+	
+	function _split() {
+		var vlsbDiv = document.getElementById('vlsb-input-wrapper');
+		while (vlsbDiv.hasChildNodes()) vlsbDiv.removeChild(vlsbDiv.firstChild);
+		vlsbDiv = document.getElementById('vlsb-output-wrapper');
+		while (vlsbDiv.hasChildNodes()) vlsbDiv.removeChild(vlsbDiv.firstChild);
+		vlsbDiv.style.display = "none";
+		
+		if(clickedOnNext == true){
+			currentForwardBtn.style.display = 'none';
+			clickedOnNext = false;
+			currentForwardBtn.setAttribute('isClicked', '0');
+		}
+		const callerID = parseInt(this.getAttribute('id').split('_')[1]);
+		const callerSubnet = subnetArray[callerID].subnet;
+		const cidrSelect = document.getElementById('cidrSelect_'+callerID);
+		const cidrSelected = cidrSelect.value;
+		const nextID = idTracker;
+		
+		let callerSize = subnetArray[callerID].size;
+		let octate;
+		
+		if (callerSize >= 8 && callerSize <= 15){
+			octate = 1;
+		} else if (callerSize >= 16 && callerSize <= 23) {
+			octate = 2;
+		} else if (callerSize >= 24 && callerSize <= 32) {
+			octate = 3;
+		}
+		
+		callerSize++;
+		childDiv = document.getElementById('childDiv_' + callerID);
+		while (childDiv.hasChildNodes()) childDiv.removeChild(childDiv.firstChild);
+
+		getSubnetInfo(callerSubnet, callerSize, childDiv);
+
+		callerSubnet[octate] = parseInt(callerSubnet[octate]) + parseInt(subnetArray[callerID].splitNext);
+		getSubnetInfo(callerSubnet, callerSize, childDiv);
+		
+		if(callerSize != cidrSelected){
+			for(var i = nextID; i<(Math.pow(2,(cidrSelected-callerSize+1)))-2+nextID; i++)
+				document.getElementById('splitBtn_'+i).click();
+		}
+	}
+
+	function calculateSubnets(cidr) {
+		if (cidr < 1 || cidr > 32) {
+			return 0;
+		}
+
+		const availableHostBits = 32 - cidr;
+		const totalSubnets = Math.pow(2, availableHostBits);
+		
+		return totalSubnets;
+	}
+
+	function getSubnetInfo(ip, slash, parentElem) {	
+		const bitTable = [];
+		for (let i = 0; i + 8 <= 32; i++) bitTable[8 + i] = 24 - i;
+
+		var network = [ip[0], ip[1], 0, 0];
+		var firstAvailable = [ip[0], ip[1], 0, 1];
+		var lastAvailable = [ip[0], ip[1], 255, 254];
+		var broadCast = [ip[0], ip[1], 255, 255];
+		var mask = [255, 255, 0, 0];
+		var wildcard = [0, 0, 255, 255];
+		var available = Math.pow(2, bitTable[slash]) - 2;
+		let offset = 0;
+		let octate = -1;
+
+		if (slash >=16){
+			network = [ip[0], ip[1], ip[2], 0];
+			firstAvailable = [ip[0], ip[1], ip[2], 1];
+			lastAvailable = [ip[0], ip[1], ip[2], 254];
+			broadCast = [ip[0], ip[1], ip[2], 255];
+			mask = [255, 255, 255, 0];
+			wildcard = [0, 0, 0, 255];
+		}
+
+		if (slash >= 8 && slash <= 15) {
+			octate = 1;
+			offset = 16;
+		} else if (slash >= 16 && slash <= 23) {
+			octate = 2;
+			offset = 8;
+		} else if (slash >= 24 && slash <= 32) {
+			octate = 3;
+			offset = 0;
+		}
+		
+
+		
+		offset = Math.pow(2, bitTable[slash + offset]) - 2;
+		mask[octate] = 254 - offset;
+		wildcard[octate] = 255 - mask[octate];
+		mask = mask.join('.');
+		wildcard = wildcard.join('.');
+
+		for (let i = 0; i <= 256; i += (offset + 2)) {
+			if (i > parseInt(ip[octate])) {
+				const x = i - (offset + 2);
+
+				network[octate] = x;
+				broadCast[octate] = offset + x + 1;
+
+				if (slash === 32) {
+					firstAvailable[octate] = ip[3];
+					lastAvailable[octate] = ip[3];
+					available = 0;
+				} else if (slash === 31) {
+					firstAvailable[octate] = x;
+					lastAvailable[octate] = x + 1;
+				} else if (slash > 23) {
+					firstAvailable[octate] = x + 1;
+					lastAvailable[octate] = broadCast[octate] - 1;
+				} else {
+					firstAvailable[octate] = x;
+					lastAvailable[octate] = broadCast[octate];
+				}
+
+				network = network.join('.');
+				firstAvailable = firstAvailable.join('.');
+				lastAvailable = lastAvailable.join('.');
+				broadCast = broadCast.join('.');
+				break;
+			}
+		}
+
+		const outputTitles = "\nNetwork:\n"+
+							"Subnet Mask:\n"+
+							"Wildcard:\n"+
+							"Total Usable:\n"+
+							"IP Range:\n"+
+							"Broadcast:\n ";
+
+		const outputInfo = "\n"+network+"/"+slash+"\n"+
+							""+mask+"\n"+
+							""+wildcard+"\n"+
+							""+available+"\n"+
+							""+firstAvailable+" - "+lastAvailable+"\n"+
+							""+broadCast+"\n ";
+
+		subnetArray[idTracker] = {
+			subnet:network.split("."),
+			size:slash,
+			available:available,
+			splitNext:(offset+2)/2
+		};
+
+		const childDiv = document.createElement('div');
+		childDiv.classList.add('subnetInfo');
+		childDiv.setAttribute('id', 'childDiv_' + idTracker);
+
+		const splitButton = document.createElement('button');
+		splitButton.addEventListener('click', _split);
+		splitButton.classList.add('split-button');
+
+		splitButton.setAttribute('id', 'splitBtn_' + idTracker);
+		splitButton.innerHTML = 'Split';
+
+		var selectElement = document.createElement('select');
+		selectElement.classList.add('cidrSmall');
+		selectElement.setAttribute('id', 'cidrSelect_'+idTracker);
+
+		for (var i = slash + 1; i <= 32; i++) {
+			// Create an <option> element
+			var optionElement = document.createElement('option');
+			optionElement.value = i;
+			optionElement.textContent = '/'+i+'\tTotal:'+(Math.pow(2,(i-slash)));
+			optionElement.setAttribute('data-info', 'total subnets ' + (calculateSubnets(i)));
+			optionElement.setAttribute('total_sub', calculateSubnets(i));
+			// Append the <option> element to the <select> element
+			selectElement.appendChild(optionElement);
+		}
+
+		const titlesDiv = document.createElement('div');
+		titlesDiv.classList.add('titleDivs');
+		titlesDiv.textContent = outputTitles;
+
+		const infoDiv = document.createElement('div');
+		infoDiv.classList.add('infoDivs');
+		infoDiv.textContent = outputInfo;
+		
+		const nextButton = document.createElement('button');
+		nextButton.addEventListener('click', _openNext);
+		nextButton.setAttribute('id', 'nextButton_'+idTracker);
+		nextButton.setAttribute('idTracker', idTracker);
+		nextButton.setAttribute('isClicked', '0');
+		nextButton.classList.add('nextButton');
+		nextButton.innerHTML = ">";
+		nextButton.style.display = 'none';
+		
+		childDiv.appendChild(titlesDiv);
+		childDiv.appendChild(infoDiv);
+
+		if (slash < 32) {
+			childDiv.appendChild(splitButton);
+			childDiv.appendChild(selectElement);
+		}
+
+		childDiv.appendChild(nextButton);
+		childDiv.setAttribute('idTracker', idTracker);
+		
+		childDiv.addEventListener('mouseenter', (event) => {
+		  var clickedButton = document.getElementById('nextButton_'+event.target.getAttribute('idTracker'));
+		  try{
+		  if (clickedButton.getAttribute('isClicked') == '0' && clickedOnNext == false){
+			clickedButton.style.display = 'block';
+			}
+			} catch{}
+		});
+
+		childDiv.addEventListener('mouseleave', (event) => {
+		 var clickedButton = document.getElementById('nextButton_'+event.target.getAttribute('idTracker'));
+		 try{
+		if (clickedButton.getAttribute('isClicked') == '0' && clickedOnNext == false){
+		   clickedButton.style.display = 'none';
+		   }
+		   }catch{}
+		});
+
+		parentElem.appendChild(childDiv);
+		idTracker++;
+		
+		document.getElementById('subnet-div').style.display = "block";
+		
+	}
+    </script>
+	</div>
+	 </div>
+	<footer>
+	  <p>If prompted, make sure you "Allow Blocked Content" down at the bottom.</p>
+	  <p>BETA version is now better than ever! Look at the Summary Tool!!</p>
+	  <p>(r) 2ID C6 NETENG Subnet Calculator ver. 0.3.2</p>
+	</footer>
+</body>
+</html>
+
